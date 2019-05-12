@@ -98,8 +98,8 @@ public class AntsMain {
             //it.remove(); // avoids a ConcurrentModificationException
         }
         //System.out.println("redants" + redAnts.s);
-       // Kruskal k = new Kruskal(redAnts,blackAnts);
-        //k.executeKruskal();
+        Kruskal k = new Kruskal(redAnts,blackAnts);
+        k.executeKruskal();
         GaleShapley g = new GaleShapley(redAnts,blackAnts);
         g.executeGaleShapley();
 
