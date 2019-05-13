@@ -11,7 +11,7 @@ public class GaleShapley {
     private HashMap<Integer, ArrayList<Integer> > redPreferences;
     private HashMap<Integer , ArrayList<Integer>> blackPreferences;
     private ArrayList<Integer> antsRank;
-
+    private HashMap<Integer,Integer> proposals;
 
     public GaleShapley( HashMap<Integer, RedAnt> redAnts,HashMap<Integer, BlackAnt> blackAnts) {
         this.blackAnts = blackAnts;
@@ -22,14 +22,14 @@ public class GaleShapley {
         //redPreferenes = new HashMap<Integer,new Integer([size/2])>();
         this.redPreferences = new HashMap<Integer , ArrayList<Integer>>();
         this.blackPreferences = new HashMap<Integer , ArrayList<Integer>>();
-
+        this.proposals = new HashMap<>();
     }
 
     public void executeGaleShapley(){
         findDistances();
         // find preferences for odd numbers
         createPreferences();
-
+        createProposalTable();
     }
 
 
@@ -39,7 +39,7 @@ public class GaleShapley {
             this.antsRank = new ArrayList<>();
             ArrayList<Float> rankAssist = new ArrayList<>(); // it contains the corresponidg distances
             for(int j=2 ; j < size ; j+=2 ){
-                System.out.println("twra blepoyme kserw gw asxeta pragmata " +distances[i][j]);
+                System.out.println("twra blepoyme kserw gw asxeta pragmata " + distances[i][j]);
                 antsRank.add(j);
                 rankAssist.add(distances[i][j]);
             }
@@ -49,9 +49,13 @@ public class GaleShapley {
             //System.out.println("gia na doyme " + sort[14]);
             rankAssist = new ArrayList<Float>(Arrays.asList(sort));
             redPreferences.put(i,antsRank);
-            System.out.println("to redpreferenves exei megethos " + redPreferences.size());
+            System.out.println("to redpreferenves exei megethos " + redPreferences.size() );
+            for(int k=0 ; k < redPreferences.get(i).size() ; k ++){
+               // System.out.println("Stoixeio me protereotita  " + (k+1) +" : " + + redPreferences.get(i).get(k));
+            }
         }
         //create preferences for black ants
+
         for(int i=2 ; i < size ; i +=2 ){ //size = size-1
             this.antsRank = new ArrayList<>();
             ArrayList<Float> rankAssist = new ArrayList<>(); // it contains the corresponidg distances
@@ -66,10 +70,27 @@ public class GaleShapley {
             //System.out.println("gia na doyme " + sort[14]);
             rankAssist = new ArrayList<Float>(Arrays.asList(sort));
             blackPreferences.put(i,antsRank);
-            System.out.println("to redpreferenves exei megethos " + redPreferences.size());
+            System.out.println("to redpreferenves exei megethos " + blackPreferences.size());
+            for(int k=0 ; k < blackPreferences.get(i).size() ; k ++){
+               // System.out.println("Stoixeio me protereotita  " + (k+1) +" : " + + blackPreferences.get(i).get(k));
+            }
         }
+
     }
 
+    private void createProposalTable(){
+        //Initialize HashMap
+        for(int i  = 1 ; i < size ; i+=2){
+            proposals.put(i,redPreferences.get(i).get(0));
+        }
+
+        for(int i  = 1 ; i < size ; i+=2){
+            proposals.put(i,redPreferences.get(i).get(0));
+            System.out.println(i + " " + proposals.get(i));
+        }
+        //Continue
+
+    }
     private void findDistances(){
         int xi,yi;
         int xj,yj;
