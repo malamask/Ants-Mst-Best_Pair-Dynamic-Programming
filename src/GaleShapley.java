@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GaleShapley {
     private HashMap<Integer,BlackAnt> blackAnts;
@@ -12,6 +13,7 @@ public class GaleShapley {
     private HashMap<Integer , ArrayList<Integer>> blackPreferences;
     private ArrayList<Integer> antsRank;
     private HashMap<Integer,Integer> proposals;
+    private HashSet<Integer> proposalUnion;
 
     public GaleShapley( HashMap<Integer, RedAnt> redAnts,HashMap<Integer, BlackAnt> blackAnts) {
         this.blackAnts = blackAnts;
@@ -23,6 +25,7 @@ public class GaleShapley {
         this.redPreferences = new HashMap<Integer , ArrayList<Integer>>();
         this.blackPreferences = new HashMap<Integer , ArrayList<Integer>>();
         this.proposals = new HashMap<>();
+        this.proposalUnion = new HashSet<>();
     }
 
     public void executeGaleShapley(){
@@ -82,13 +85,22 @@ public class GaleShapley {
         //Initialize HashMap
         for(int i  = 1 ; i < size ; i+=2){
             proposals.put(i,redPreferences.get(i).get(0));
+            proposalUnion.add(redPreferences.get(i).get(0));
+            redPreferences.get(i).remove(0);//so, at every loop, we chouse the index:0
         }
 
         for(int i  = 1 ; i < size ; i+=2){
-            proposals.put(i,redPreferences.get(i).get(0));
             System.out.println(i + " " + proposals.get(i));
         }
         //Continue
+
+        while(proposalUnion.size() < (size-1)/2){
+            //System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
+            for(int i  = 1 ; i < size ; i+=2 ){
+
+            }
+        }
+
 
     }
     private void findDistances(){
