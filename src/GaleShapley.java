@@ -14,6 +14,7 @@ public class GaleShapley {
     private ArrayList<Integer> antsRank;
     private HashMap<Integer,Integer> proposals;
     private HashSet<Integer> proposalUnion;
+    private HashMap<Integer,Integer> chousedFrom; // hashset for black ants, it used to search with low cost when is choosed the same black ant
 
     public GaleShapley( HashMap<Integer, RedAnt> redAnts,HashMap<Integer, BlackAnt> blackAnts) {
         this.blackAnts = blackAnts;
@@ -26,6 +27,7 @@ public class GaleShapley {
         this.blackPreferences = new HashMap<Integer , ArrayList<Integer>>();
         this.proposals = new HashMap<>();
         this.proposalUnion = new HashSet<>();
+        this.chousedFrom = new HashMap<>();
     }
 
     public void executeGaleShapley(){
@@ -86,7 +88,23 @@ public class GaleShapley {
         for(int i  = 1 ; i < size ; i+=2){
             proposals.put(i,redPreferences.get(i).get(0));
             proposalUnion.add(redPreferences.get(i).get(0));
+            System.out.println("initiliazie");
+
+            if(chousedFrom.containsKey(redPreferences.get(i).get(0))){// if this black ant has alread choosed from other red ants, change the proposal hashmao
+                System.out.println("exei epilegei hdh to " + redPreferences.get(i).get(0) + " apo to " + chousedFrom.get(redPreferences.get(i).get(0)));
+                //here we have to iterate the blackPreference ArrayList to find which red ants is more desirable
+                if(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) > blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0)))){
+                    System.out.println(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) + " to murmigki " + i + " kai " + blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0))) + " to murmigi " + chousedFrom.get(redPreferences.get(i).get(0)) );
+                    System.out.println("Zhmia");
+
+                }
+                //System.out.println("timh kserw gw " + redPreferences.get(i));
+            }else{
+                chousedFrom.put(redPreferences.get(i).get(0), i);
+
+            }
             redPreferences.get(i).remove(0);//so, at every loop, we chouse the index:0
+
         }
 
         for(int i  = 1 ; i < size ; i+=2){
@@ -94,13 +112,14 @@ public class GaleShapley {
         }
         //Continue
 
+        /*
         while(proposalUnion.size() < (size-1)/2){
             //System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
             for(int i  = 1 ; i < size ; i+=2 ){
 
             }
         }
-
+            */
 
     }
     private void findDistances(){
