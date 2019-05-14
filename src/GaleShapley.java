@@ -102,7 +102,6 @@ public class GaleShapley {
                     redPreferences.get(i).remove(0);//remove also this preferenve because it's already used
 
                 }else{ // current ant is more desirable from the previοus
-
                     redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).remove(0);//remove the current preference
                     proposals.put(chousedFrom.get(redPreferences.get(i).get(0)),redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).get(0));
                     proposalUnion.add(redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).get(0));
@@ -125,6 +124,7 @@ public class GaleShapley {
 
         System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
         while(proposalUnion.size() < (size-1)/2){
+            proposalUnion = new HashSet<>();// re - create the proposal union
             System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
             for(int i  = 1 ; i < size ; i+=2 ){
 
