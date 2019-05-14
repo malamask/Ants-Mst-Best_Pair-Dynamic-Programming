@@ -253,5 +253,11 @@ public class GaleShapley {
         return i+1;
     }
     //end of sorting code
+
+
+    public HashMap<Integer, Integer> getProposals() {
+        return proposals;
+    }
+
 }
 

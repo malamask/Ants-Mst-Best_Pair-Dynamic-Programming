@@ -103,6 +103,9 @@ public class AntsMain {
         GaleShapley g = new GaleShapley(redAnts,blackAnts);
         g.executeGaleShapley();
 
+        DynamicProgramming d = new DynamicProgramming(redAnts,blackAnts,g.getProposals());
+        d.executeAlgorythm();
+
 
 }
 
