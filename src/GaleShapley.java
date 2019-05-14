@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -30,11 +33,12 @@ public class GaleShapley {
         this.chousedFrom = new HashMap<>();
     }
 
-    public void executeGaleShapley(){
+    public void executeGaleShapley() throws FileNotFoundException, UnsupportedEncodingException {
         findDistances();
         // find preferences for odd numbers
         createPreferences();
         createProposalTable();
+        saveResult();
     }
 
 
@@ -99,6 +103,7 @@ public class GaleShapley {
                     redPreferences.get(i).remove(0);//remove the current preference
                     proposals.put(i,redPreferences.get(i).get(0));// update the proposal table
                     proposalUnion.add(redPreferences.get(i).get(0));
+                    System.out.println("Twra mpike to " + redPreferences.get(i).get(0));
                     redPreferences.get(i).remove(0);//remove also this preferenve because it's already used
 
                 }else{ // current ant is more desirable from the previοus
@@ -127,11 +132,44 @@ public class GaleShapley {
             proposalUnion = new HashSet<>();// re - create the proposal union
             System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
             for(int i  = 1 ; i < size ; i+=2 ){
+                if(chousedFrom.containsKey(redPreferences.get(i).get(0))){// if this black ant has alread choosed from other red ants, change the proposal hashmao
+                    System.out.println("exei epilegei hdh to " + redPreferences.get(i).get(0) + " apo to " + chousedFrom.get(redPreferences.get(i).get(0)));
+                    //here we have to iterate the blackPreference ArrayList to find which red ants is more desirable
+                    if(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) > blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0)))){// redPreferevnes.get(i) the same with the other red ant
+                        System.out.println(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) + " to murmigki " + i + " kai " + blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0))) + " to murmigi " + chousedFrom.get(redPreferences.get(i).get(0)) );
+                        //System.out.println("Zhmia");
+                        redPreferences.get(i).remove(0);//remove the current preference
+                        proposals.put(i,redPreferences.get(i).get(0));// update the proposal table
+                        proposalUnion.add(redPreferences.get(i).get(0));
+                        System.out.println("Twra mpike to " + redPreferences.get(i).get(0));
+                        redPreferences.get(i).remove(0);//remove also this preferenve because it's already used
 
+                    }else{ // current ant is more desirable from the previοus
+                        redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).remove(0);//remove the current preference
+                        proposals.put(chousedFrom.get(redPreferences.get(i).get(0)),redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).get(0));
+                        proposalUnion.add(redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).get(0));
+                        redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).remove(0);//remove also this preferenve because it's already used
+                    }
+                    //System.out.println("timh kserw gw " + redPreferences.get(i));
+                    chousedFrom.put(redPreferences.get(i).get(0), i);
+                }else{
+                    proposalUnion.add(proposals.get(i));
+                   // chousedFrom.put(redPreferences.get(i).get(0), i);
+                    //redPreferences.get(i).remove(0);//so, at every loop, we chouse the index:0
+                }
             }
         }
 
 
+    }
+
+
+    private void saveResult() throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter("GaleSapley.txt", "UTF-8");
+        for(int i= 1 ; i < size; i+=2){
+            writer.println(i + " " +proposals.get(i));
+        }
+        writer.close();
     }
     private void findDistances(){
         int xi,yi;
