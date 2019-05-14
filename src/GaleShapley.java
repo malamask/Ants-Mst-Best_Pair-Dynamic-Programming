@@ -93,17 +93,28 @@ public class GaleShapley {
             if(chousedFrom.containsKey(redPreferences.get(i).get(0))){// if this black ant has alread choosed from other red ants, change the proposal hashmao
                 System.out.println("exei epilegei hdh to " + redPreferences.get(i).get(0) + " apo to " + chousedFrom.get(redPreferences.get(i).get(0)));
                 //here we have to iterate the blackPreference ArrayList to find which red ants is more desirable
-                if(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) > blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0)))){
+                if(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) > blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0)))){// redPreferevnes.get(i) the same with the other red ant
                     System.out.println(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) + " to murmigki " + i + " kai " + blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0))) + " to murmigi " + chousedFrom.get(redPreferences.get(i).get(0)) );
                     System.out.println("Zhmia");
+                    redPreferences.get(i).remove(0);//remove the current preference
+                    proposals.put(i,redPreferences.get(i).get(0));// update the proposal table
+                    proposalUnion.add(redPreferences.get(i).get(0));
+                    redPreferences.get(i).remove(0);//remove also this preferenve because it's already used
 
+                }else{ // current ant is more desirable from the previοus
+
+                    redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).remove(0);//remove the current preference
+                    proposals.put(chousedFrom.get(redPreferences.get(i).get(0)),redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).get(0));
+                    proposalUnion.add(redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).get(0));
+                    redPreferences.get(chousedFrom.get(redPreferences.get(i).get(0))).remove(0);//remove also this preferenve because it's already used
                 }
                 //System.out.println("timh kserw gw " + redPreferences.get(i));
+                chousedFrom.put(redPreferences.get(i).get(0), i);
             }else{
                 chousedFrom.put(redPreferences.get(i).get(0), i);
-
+                redPreferences.get(i).remove(0);//so, at every loop, we chouse the index:0
             }
-            redPreferences.get(i).remove(0);//so, at every loop, we chouse the index:0
+
 
         }
 
@@ -112,14 +123,14 @@ public class GaleShapley {
         }
         //Continue
 
-        /*
+        System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
         while(proposalUnion.size() < (size-1)/2){
-            //System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
+            System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
             for(int i  = 1 ; i < size ; i+=2 ){
 
             }
         }
-            */
+
 
     }
     private void findDistances(){
