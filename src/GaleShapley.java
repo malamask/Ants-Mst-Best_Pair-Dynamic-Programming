@@ -172,8 +172,8 @@ public class GaleShapley {
         writer.close();
     }
     private void findDistances(){
-        int xi,yi;
-        int xj,yj;
+        float xi,yi;
+        float xj,yj;
         for (int i = 1; i < size ; i++) { //size = size-1
             if(i % 2 != 0){// odd number
                 xi = redAnts.get(i).getX();
@@ -206,7 +206,7 @@ public class GaleShapley {
 
         System.out.println("size =" + size);
     }
-    private float euclideanDistance(int x1,int y1,int x2,int y2){
+    private float euclideanDistance(float x1,float y1,float x2,float y2){
         float xD = Math.abs(x1-x2);
         xD = (float) Math.pow(xD,2);
         float yD = Math.abs(y1-y2);

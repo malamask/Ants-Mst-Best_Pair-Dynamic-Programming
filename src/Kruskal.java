@@ -47,10 +47,10 @@ public class Kruskal {
 
     }
 
-    private void findDistances(){
+    private void findDistances(){ // O(n^2) complexity
 
-        int xi,yi;
-        int xj,yj;
+        float xi,yi;
+        float xj,yj;
         for (int i = 1; i < size ; i++) {
             if(i % 2 != 0){// odd number
                 xi = redAnts.get(i).getX();
@@ -84,11 +84,12 @@ public class Kruskal {
         System.out.println("size =" + size);
     }
 
-    private float euclideanDistance(int x1,int y1,int x2,int y2){
+    private float euclideanDistance(float x1,float y1,float x2,float y2){
         float xD = Math.abs(x1-x2);
         xD = (float) Math.pow(xD,2);
         float yD = Math.abs(y1-y2);
         yD = (float) Math.pow(yD,2);
+        System.out.println("x1 " + x1 + " kai y1 " + y1 +" x2 " + x2 + " kai y2 " + y2 +"  " +Math.sqrt(xD + yD));
         return (float) Math.sqrt(xD + yD);
     }
 
@@ -104,7 +105,7 @@ public class Kruskal {
             }
         }
         System.out.println(sortedDistances.size());
-        System.out.println(sortedDistances.get(14));
+//        System.out.println(sortedDistances.get(14));
         System.out.println("first pair " + firstPair.size());
         System.out.println("second pair " + secondPair.size());
         for(int i = 0; i < sortedDistances.size() ; i++){
@@ -115,7 +116,7 @@ public class Kruskal {
         quickSort(sort,0,sortedDistances.size()-1);
         //System.out.println("gia na doyme " + sort[14]);
         sortedDistances = new ArrayList<Float>(Arrays.asList(sort));
-        System.out.println("twra na doyme " + sortedDistances.get(5));
+//        System.out.println("twra na doyme " + sortedDistances.get(5));
         System.out.println(sortedDistances.size());
         for(int i = 0; i < sortedDistances.size() ; i++){
             System.out.println("sorted array :" + sortedDistances.get(i)+ "  ants  " + firstPair.get(i) + "," + secondPair.get(i));

@@ -2,9 +2,9 @@
 
 public class Ant {
     private int id; // id
-    private int x; // x - coordinate
-    private int y; // y = coordinate
-    public Ant(int id , int x ,int y){
+    private float x; // x - coordinate
+    private float y; // y = coordinate
+    public Ant(int id , float x ,float y){
         this.id = id;
         this.x = x;
         this.y = y;
@@ -14,11 +14,11 @@ public class Ant {
         return id;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 }

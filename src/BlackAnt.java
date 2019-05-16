@@ -5,7 +5,7 @@ public class BlackAnt extends Ant {
     private int w4;
     private int w5;
 
-    public BlackAnt(int id, int x, int y, int w1, int w2, int w3, int w4, int w5) {
+    public BlackAnt(int id, float x, float y, int w1, int w2, int w3, int w4, int w5) {
         super(id, x, y);
         this.w1 = w1;
         this.w2 = w2;

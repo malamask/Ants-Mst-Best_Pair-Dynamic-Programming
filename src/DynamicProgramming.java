@@ -20,9 +20,24 @@ public class DynamicProgramming {
         System.out.println("DYNAMIC PROGRAMMING AREA");
         System.out.println("Exomye redants " + redAnts.size());
         System.out.println("Exomye blackants " + blackAnts.size());
-        System.out.println(" Exomye proposal size" + proposals.size());
-
+        System.out.println(" Exomye proposal size " + proposals.size());
+        createTableBottomUp();
     }
+
+    public void createTableBottomUp(){
+        System.out.println("Ntemek ksekinaei h lysh");
+        for(int i=1 ; i < size ; i+=2){
+            //create the table for every pair
+            System.out.println(i);
+            System.out.println("lets see"+blackAnts.get(proposals.get(i)).getW1());
+            System.out.println("lets see"+blackAnts.get(proposals.get(i)).getW2());
+            System.out.println("lets see"+blackAnts.get(proposals.get(i)).getW3());
+            System.out.println("lets see"+blackAnts.get(proposals.get(i)).getW4());
+            System.out.println("lets see"+blackAnts.get(proposals.get(i)).getW5());
+        }
+    }
+
+
 
 
 
