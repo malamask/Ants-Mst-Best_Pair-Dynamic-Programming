@@ -31,23 +31,23 @@ public class DynamicProgramming {
 
     public void createTableBottomUp(){
         System.out.println("Ntemek ksekinaei h lysh");
-        for(int i=1 ; i < size ; i+=2){
+        for(int ant=1 ; ant < size - 3 ; ant+=2){
             //create the table for every pair
-            int capacity = redAnts.get(i).getCapacity();
-            System.out.println(i);
-            System.out.println("lets see "+blackAnts.get(proposals.get(i)).getW1());
-            System.out.println("lets see "+blackAnts.get(proposals.get(i)).getW2());
-            System.out.println("lets see "+blackAnts.get(proposals.get(i)).getW3());
-            System.out.println("lets see "+blackAnts.get(proposals.get(i)).getW4());
-            System.out.println("lets see "+blackAnts.get(proposals.get(i)).getW5());
+            int capacity = redAnts.get(ant).getCapacity();
+            System.out.println(ant);
+            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW1());
+            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW2());
+            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW3());
+            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW4());
+            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW5());
             this.weights = new ArrayList<>();
             this.rankOfWeights = new ArrayList<>(); // for print the results sorted after the loop
             weights.add(0);
-            weights.add(blackAnts.get(proposals.get(i)).getW1());
-            weights.add(blackAnts.get(proposals.get(i)).getW2());
-            weights.add(blackAnts.get(proposals.get(i)).getW3());
-            weights.add(blackAnts.get(proposals.get(i)).getW4());
-            weights.add(blackAnts.get(proposals.get(i)).getW5());
+            weights.add(blackAnts.get(proposals.get(ant)).getW1());
+            weights.add(blackAnts.get(proposals.get(ant)).getW2());
+            weights.add(blackAnts.get(proposals.get(ant)).getW3());
+            weights.add(blackAnts.get(proposals.get(ant)).getW4());
+            weights.add(blackAnts.get(proposals.get(ant)).getW5());
             rankOfWeights.add(0);
             rankOfWeights.add(1);
             rankOfWeights.add(2);
@@ -58,12 +58,55 @@ public class DynamicProgramming {
             quickSort(sort,0,weights.size()-1);
             weights = new ArrayList<>(Arrays.asList(sort));
            // System.out.println("After sorting " + weights.get(0) + " thesi " + rankOfWeights.get(0));
+            System.out.println("Capacity " + capacity);
             System.out.println("After sorting " + weights.get(1)+ " thesi " + rankOfWeights.get(1));
             System.out.println("After sorting " + weights.get(2)+ " thesi " + rankOfWeights.get(2));
             System.out.println("After sorting " + weights.get(3)+ " thesi " + rankOfWeights.get(3));
             System.out.println("After sorting " + weights.get(4)+ " thesi " + rankOfWeights.get(4));
             System.out.println("After sorting " + weights.get(5)+ " thesi " + rankOfWeights.get(5));
             int [][] table = new int[6][capacity+1]; //6, because we have five weights
+            //implement two start conditions, [i,0] = 0 and  [ 0, j ] = ∞ ;
+            for(int i = 0 ; i < 6 ; i++){
+                table[i][0] = 0;
+            }
+            for(int j = 1 ; j < capacity ; j++){
+                //table[0][j] = Integer.MAX_VALUE;// it "replaces" the infinity value
+                table[0][j] = 100;
+            }
+            for(int i  = 0 ; i < 6 ; i++){
+                for(int j = 0 ; j < capacity ; j++){
+                    System.out.print(table[i][j] + " ");
+                }
+                System.out.println("");
+            }
+            //initialize two values
+            int x;
+            int y;
+            //here this for - loop fills the table, we use the relation [i,j] = min{[i-1,j], 1 + [i,j - Vi]}
+            for(int i  = 1 ; i < 6 ; i++){
+                for(int j = 1 ; j < capacity ; j++){
+                    //calculate two values
+                    x = table[i - 1][j];
+                    if(j - weights.get(i) < 0){ // index is out of bounds, so the value is infinity
+                        y = Integer.MAX_VALUE;
+                    }else{
+                        y = 1 + table[i][j - weights.get(i)];
+                    }
+                    if( x < y) {
+                        table[i][j] = x;
+                    }else{
+                        table[i][j] = y;
+                    }
+                }
+
+            }
+            for(int i  = 0 ; i < 6 ; i++){
+                for(int j = 0 ; j < capacity ; j++){
+                    System.out.print(table[i][j] + " ");
+                }
+                System.out.println("");
+            }
+
         }
     }
 
