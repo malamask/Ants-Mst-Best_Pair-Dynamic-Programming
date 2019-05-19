@@ -1,3 +1,5 @@
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,15 +33,13 @@ public class DynamicProgramming {
 
     public void createTableBottomUp(){
         System.out.println("Ntemek ksekinaei h lysh");
-        for(int ant=1 ; ant < size - 3 ; ant+=2){
+        int weightsNumber = 6; // +1 for the row with MAX.INTEGER
+        for(int ant=3 ; ant < size-2  ; ant+=2){
             //create the table for every pair
+            System.out.println("Zeugos " + ant + "  " + proposals.get(ant));
             int capacity = redAnts.get(ant).getCapacity();
             System.out.println(ant);
-            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW1());
-            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW2());
-            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW3());
-            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW4());
-            System.out.println("lets see "+blackAnts.get(proposals.get(ant)).getW5());
+
             this.weights = new ArrayList<>();
             this.rankOfWeights = new ArrayList<>(); // for print the results sorted after the loop
             weights.add(0);
@@ -57,24 +57,18 @@ public class DynamicProgramming {
             Integer[] sort = weights.toArray(new Integer[weights.size()]); // convert to array in order to sorting i as an array
             quickSort(sort,0,weights.size()-1);
             weights = new ArrayList<>(Arrays.asList(sort));
-           // System.out.println("After sorting " + weights.get(0) + " thesi " + rankOfWeights.get(0));
             System.out.println("Capacity " + capacity);
-            System.out.println("After sorting " + weights.get(1)+ " thesi " + rankOfWeights.get(1));
-            System.out.println("After sorting " + weights.get(2)+ " thesi " + rankOfWeights.get(2));
-            System.out.println("After sorting " + weights.get(3)+ " thesi " + rankOfWeights.get(3));
-            System.out.println("After sorting " + weights.get(4)+ " thesi " + rankOfWeights.get(4));
-            System.out.println("After sorting " + weights.get(5)+ " thesi " + rankOfWeights.get(5));
-            int [][] table = new int[6][capacity+1]; //6, because we have five weights
+            int [][] table = new int[weightsNumber][capacity+1]; //6, because we have five weights
             //implement two start conditions, [i,0] = 0 and  [ 0, j ] = ∞ ;
-            for(int i = 0 ; i < 6 ; i++){
+            for(int i = 0 ; i < weightsNumber ; i++){
                 table[i][0] = 0;
             }
-            for(int j = 1 ; j < capacity ; j++){
+            for(int j = 1 ; j <= capacity ; j++){
                 //table[0][j] = Integer.MAX_VALUE;// it "replaces" the infinity value
-                table[0][j] = 100;
+                table[0][j] = 15;
             }
-            for(int i  = 0 ; i < 6 ; i++){
-                for(int j = 0 ; j < capacity ; j++){
+            for(int i  = 0 ; i < weightsNumber ; i++){
+                for(int j = 0 ; j <= capacity ; j++){
                     System.out.print(table[i][j] + " ");
                 }
                 System.out.println("");
@@ -83,8 +77,8 @@ public class DynamicProgramming {
             int x;
             int y;
             //here this for - loop fills the table, we use the relation [i,j] = min{[i-1,j], 1 + [i,j - Vi]}
-            for(int i  = 1 ; i < 6 ; i++){
-                for(int j = 1 ; j < capacity ; j++){
+            for(int i  = 1 ; i < weightsNumber ; i++){
+                for(int j = 1 ; j <= capacity ; j++){
                     //calculate two values
                     x = table[i - 1][j];
                     if(j - weights.get(i) < 0){ // index is out of bounds, so the value is infinity
@@ -100,8 +94,8 @@ public class DynamicProgramming {
                 }
 
             }
-            for(int i  = 0 ; i < 6 ; i++){
-                for(int j = 0 ; j < capacity ; j++){
+            for(int i  = 0 ; i < weightsNumber ; i++){
+                for(int j = 0 ; j <= capacity ; j++){
                     System.out.print(table[i][j] + " ");
                 }
                 System.out.println("");
@@ -110,6 +104,10 @@ public class DynamicProgramming {
         }
     }
 
+    private void findCombination(){
+
+
+    }
     public void quickSort(Integer arr[], int begin, int end) {
         if (begin < end) {
             int partitionIndex = partition(arr, begin, end);
@@ -148,7 +146,13 @@ public class DynamicProgramming {
         return i+1;
     }
 
-
+    private boolean seedsCanCombined(ArrayList<Integer> weights,int capacity){
+        Boolean result=true;
+        for(int i = 0 ; i < weights.size() ; i++){
+            //if()
+        }
+        return result;
+    }
 
 
 }

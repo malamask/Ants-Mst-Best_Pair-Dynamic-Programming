@@ -13,20 +13,22 @@ public class AntsMain {
         HashMap<Integer,BlackAnt> blackAnts;
         //initialize the filemanager
         FileManager file = new FileManager("ants.txt");
-        file.createHashMaps();
+        file.createHashMaps();// two hashmaps for red and black ants
         //save
         redAnts = file.getRedAnts();
         blackAnts = file.getBlackAnts();
-        // Create objects for the three algorythms - Kryskal,GaleShapley,Dynamic Programming
-
+        // Create objects for the three algorythms
+        //Kruskal
         Kruskal k = new Kruskal(redAnts,blackAnts);
         k.executeKruskal();
-
-       // GaleShapley g = new GaleShapley(redAnts,blackAnts);
-       // g.executeGaleShapley();
-
-        //DynamicProgramming d = new DynamicProgramming(redAnts,blackAnts,g.getProposals());
-        //d.executeAlgorythm();
+        //Gale Shapley
+        GaleShapley g = new GaleShapley(redAnts,blackAnts);
+        g.executeGaleShapley();
+        //Dynamic Programming
+        DynamicProgramming d = new DynamicProgramming(redAnts,blackAnts,g.getProposals());
+        d.executeAlgorythm();
+       // Dynamic2 d2 = new Dynamic2();
+       // d2.executeAlgorythm();
 
 
 }
