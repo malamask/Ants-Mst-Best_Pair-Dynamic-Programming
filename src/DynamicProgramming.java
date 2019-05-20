@@ -11,7 +11,8 @@ public class DynamicProgramming {
     private HashMap<Integer,Integer> proposals;
     private int size;
     private ArrayList<Integer> weights;
-    private ArrayList<Integer> rankOfWeights;
+    private ArrayList<Integer> rankOfWeights; // keep the sort of the weights to print them in the right
+    private ArrayList<Integer> useOfWeights; // save how much times a weight is used
 
 
 
@@ -19,7 +20,11 @@ public class DynamicProgramming {
     public DynamicProgramming(HashMap<Integer, RedAnt> redAnts, HashMap<Integer, BlackAnt> blackAnts, HashMap<Integer, Integer> proposals) {
         this.redAnts = redAnts;
         this.blackAnts = blackAnts;
+        proposals.put(1,2);
+        proposals.put(3,4);
+        proposals.put(5,6);
         this.proposals = proposals;
+
         size = blackAnts.size() + redAnts.size();
     }
 
@@ -34,7 +39,7 @@ public class DynamicProgramming {
     public void createTableBottomUp(){
         System.out.println("Ntemek ksekinaei h lysh");
         int weightsNumber = 6; // +1 for the row with MAX.INTEGER
-        for(int ant=3 ; ant < size-2  ; ant+=2){
+        for(int ant=5 ; ant < 6  ; ant+=2){
             //create the table for every pair
             System.out.println("Zeugos " + ant + "  " + proposals.get(ant));
             int capacity = redAnts.get(ant).getCapacity();
@@ -42,6 +47,10 @@ public class DynamicProgramming {
 
             this.weights = new ArrayList<>();
             this.rankOfWeights = new ArrayList<>(); // for print the results sorted after the loop
+            this.useOfWeights = new ArrayList<>();
+            for(int i = 0 ; i < weightsNumber ; i++){
+                useOfWeights.add(i,0);
+            }
             weights.add(0);
             weights.add(blackAnts.get(proposals.get(ant)).getW1());
             weights.add(blackAnts.get(proposals.get(ant)).getW2());
@@ -99,6 +108,35 @@ public class DynamicProgramming {
                     System.out.print(table[i][j] + " ");
                 }
                 System.out.println("");
+            }
+
+            // Create combination for every pair, use table[][]
+            if(table[weightsNumber-1][capacity] == 15){
+                System.out.println("ksexna to den spaei se kermata h malakia");
+            }else{
+                System.out.println("Pame na broyme kai kermatakia na ginei xamos twra");
+                int i = weightsNumber-1;
+                int j = capacity ;
+                while(j > 0){
+
+
+                if(table[i-1][j] == table[i][j]  ) {
+                    i = i - 1;
+                }else if (table[i][j] == table[i][j - weights.get(i)] + 1){ // table[i][j] == 1 + table [i,j - weights(i)
+                    System.out.println("mia fora");
+                    j = j - weights.get(i);
+                    //useOfWeights.get(i)++;
+                    int value = useOfWeights.get(i); // get value
+                    value = value + 1; // increment value
+                    System.out.println("Value");
+                    useOfWeights.set(i, value);
+                }else{
+                    System.out.println("Ayto ama ginetai th katsame th barka");
+                }
+                }
+                for(int klein = 0 ; klein < weightsNumber ; klein++){
+                    System.out.println("xrisi gia " + useOfWeights.get(klein) + " gia baros " + weights.get(klein));
+                }
             }
 
         }
