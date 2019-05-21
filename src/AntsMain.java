@@ -27,8 +27,7 @@ public class AntsMain {
         //Dynamic Programming
         DynamicProgramming d = new DynamicProgramming(redAnts,blackAnts,g.getProposals());
         d.executeAlgorythm();
-       // Dynamic2 d2 = new Dynamic2();
-       // d2.executeAlgorythm();
+
 
 
 }

@@ -1,5 +1,8 @@
 import jdk.swing.interop.SwingInterOpUtils;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,19 +16,20 @@ public class DynamicProgramming {
     private ArrayList<Integer> weights;
     private ArrayList<Integer> rankOfWeights; // keep the sort of the weights to print them in the right
     private ArrayList<Integer> useOfWeights; // save how much times a weight is used
+    PrintWriter writer;
 
 
 
 
-    public DynamicProgramming(HashMap<Integer, RedAnt> redAnts, HashMap<Integer, BlackAnt> blackAnts, HashMap<Integer, Integer> proposals) {
+    public DynamicProgramming(HashMap<Integer, RedAnt> redAnts, HashMap<Integer, BlackAnt> blackAnts, HashMap<Integer, Integer> proposals) throws FileNotFoundException, UnsupportedEncodingException {
         this.redAnts = redAnts;
         this.blackAnts = blackAnts;
-        proposals.put(1,2);
-        proposals.put(3,4);
-        proposals.put(5,6);
+       // proposals.put(1,2);
+       // proposals.put(3,4);
+        //proposals.put(5,6);
         this.proposals = proposals;
-
         size = blackAnts.size() + redAnts.size();
+        writer = new PrintWriter("DynamicProgramming.txt", "UTF-8");
     }
 
     public void executeAlgorythm(){
@@ -39,7 +43,7 @@ public class DynamicProgramming {
     public void createTableBottomUp(){
         System.out.println("Ntemek ksekinaei h lysh");
         int weightsNumber = 6; // +1 for the row with MAX.INTEGER
-        for(int ant=5 ; ant < 6  ; ant+=2){
+        for(int ant=1 ; ant < size  ; ant+=2){
             //create the table for every pair
             System.out.println("Zeugos " + ant + "  " + proposals.get(ant));
             int capacity = redAnts.get(ant).getCapacity();
@@ -137,15 +141,20 @@ public class DynamicProgramming {
                 for(int klein = 0 ; klein < weightsNumber ; klein++){
                     System.out.println("xrisi gia " + useOfWeights.get(klein) + " gia baros " + weights.get(klein));
                 }
+                saveResult(rankOfWeights,useOfWeights,ant);
             }
-
         }
+        writer.close();
     }
 
-    private void findCombination(){
-
-
+    private void saveResult(ArrayList<Integer> rankOfWeights, ArrayList<Integer> useOfWeights,int ant){
+        HashMap<Integer,Integer> rowToPrint = new HashMap<>();
+        for(int i= 1 ; i < 6 ; i++ ){
+            rowToPrint.put(rankOfWeights.get(i), useOfWeights.get(i));
+        }
+        writer.println(ant + "  " + proposals.get(ant) + "  " + rowToPrint.get(1) + " " + rowToPrint.get(2)+ " " + rowToPrint.get(3)+ " " + rowToPrint.get(4)+ " " + rowToPrint.get(5));
     }
+
     public void quickSort(Integer arr[], int begin, int end) {
         if (begin < end) {
             int partitionIndex = partition(arr, begin, end);
