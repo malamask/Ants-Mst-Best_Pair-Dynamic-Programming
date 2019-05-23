@@ -95,6 +95,7 @@ public class Kruskal {
 
     private void sortDistances(){
         System.out.println(" before sorting size =" + size);
+
         for(int i=1; i < size ; i ++ ){
             for(int j = i+1; j < size ; j++){
                // System.out.println("lege reeee " + distances[i][j]);
@@ -104,6 +105,7 @@ public class Kruskal {
                 System.out.println("x=" + i + " y=" + j + " distance = " + distances[i][j]);
             }
         }
+       // simpletEST();
         System.out.println(sortedDistances.size());
 //        System.out.println(sortedDistances.get(14));
         System.out.println("first pair " + firstPair.size());
@@ -267,5 +269,56 @@ public class Kruskal {
         return i+1;
     }
     //end of sorting code
+    public void simpletEST(){
+        this.size = 11;
+        firstPair = null;
+        secondPair = null;
+        sortedDistances = null;
+        firstPair = new ArrayList<>();
+        secondPair = new ArrayList<>();
+        sortedDistances = new ArrayList<>();
+        firstPair.add(0);
+        secondPair.add(1);
+        sortedDistances.add((float) 4);
+        firstPair.add(0);
+        secondPair.add(7);
+        sortedDistances.add((float) 8);
+        firstPair.add(1);
+        secondPair.add(2);
+        sortedDistances.add((float) 8);
+        firstPair.add(1);
+        secondPair.add(7);
+        sortedDistances.add((float) 11);
+        firstPair.add(2);
+        secondPair.add(3);
+        sortedDistances.add((float) 7);
+        firstPair.add(2);
+        secondPair.add(8);
+        sortedDistances.add((float) 2);
+        firstPair.add(2);
+        secondPair.add(5);
+        sortedDistances.add((float) 4);
+        firstPair.add(3);
+        secondPair.add(4);
+        sortedDistances.add((float) 9);
+        firstPair.add(3);
+        secondPair.add(5);
+        sortedDistances.add((float) 14);
+        firstPair.add(4);
+        secondPair.add(5);
+        sortedDistances.add((float) 10);
+        firstPair.add(5);
+        secondPair.add(6);
+        sortedDistances.add((float) 2);
+        firstPair.add(6);
+        secondPair.add(7);
+        sortedDistances.add((float) 1);
+        firstPair.add(6);
+        secondPair.add(8);
+        sortedDistances.add((float) 6);
+        firstPair.add(7);
+        secondPair.add(8);
+        sortedDistances.add((float) 7);
+    }
 
 }

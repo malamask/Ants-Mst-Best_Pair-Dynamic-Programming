@@ -21,7 +21,7 @@ public class AntsMain {
         //Kruskal
         Kruskal k = new Kruskal(redAnts,blackAnts);
         k.executeKruskal();
-        //Gale Shapley
+       // Gale Shapley
         GaleShapley g = new GaleShapley(redAnts,blackAnts);
         g.executeGaleShapley();
         //Dynamic Programming
