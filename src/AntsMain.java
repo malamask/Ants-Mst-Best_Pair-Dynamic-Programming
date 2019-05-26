@@ -12,7 +12,17 @@ public class AntsMain {
         HashMap<Integer,RedAnt> redAnts;
         HashMap<Integer,BlackAnt> blackAnts;
         //initialize the filemanager
-        FileManager file = new FileManager("ants.txt");
+        String inputFile;
+         try {
+             inputFile = args[0];
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("ArrayIndexOutOfBoundsException caught");
+        }
+        finally {
+            inputFile = "ants.txt";
+        }
+        FileManager file = new FileManager(inputFile);
         file.createHashMaps();// two hashmaps for red and black ants
         //save
         redAnts = file.getRedAnts();
