@@ -1,5 +1,6 @@
 import jdk.swing.interop.SwingInterOpUtils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -29,25 +30,24 @@ public class DynamicProgramming {
         //proposals.put(5,6);
         this.proposals = proposals;
         size = blackAnts.size() + redAnts.size();
-        writer = new PrintWriter("DynamicProgramming.txt", "UTF-8");
+        File f = new File(System.getProperty("java.class.path"));
+        File dir = f.getAbsoluteFile().getParentFile();
+        String path = dir.toString();
+        String outputfile = path + "\\" + "DynamicProgramming.txt";
+        writer = new PrintWriter(outputfile, "UTF-8");
+        //writer = new PrintWriter("DynamicProgramming.txt", "UTF-8");
     }
 
     public void executeAlgorythm(){
-        System.out.println("DYNAMIC PROGRAMMING AREA");
-        System.out.println("Exomye redants " + redAnts.size());
-        System.out.println("Exomye blackants " + blackAnts.size());
-        System.out.println(" Exomye proposal size " + proposals.size());
+
         createTableBottomUp();
     }
 
     public void createTableBottomUp(){
-        System.out.println("Ntemek ksekinaei h lysh");
         int weightsNumber = 6; // +1 for the row with MAX.INTEGER
         for(int ant=1 ; ant < size  ; ant+=2){
             //create the table for every pair
-            System.out.println("Zeugos " + ant + "  " + proposals.get(ant));
             int capacity = redAnts.get(ant).getCapacity();
-            System.out.println(ant);
 
             this.weights = new ArrayList<>();
             this.rankOfWeights = new ArrayList<>(); // for print the results sorted after the loop
@@ -70,7 +70,7 @@ public class DynamicProgramming {
             Integer[] sort = weights.toArray(new Integer[weights.size()]); // convert to array in order to sorting i as an array
             quickSort(sort,0,weights.size()-1);
             weights = new ArrayList<>(Arrays.asList(sort));
-            System.out.println("Capacity " + capacity);
+            //System.out.println("Capacity " + capacity);
             int [][] table = new int[weightsNumber][capacity+1]; //6, because we have five weights
             //implement two start conditions, [i,0] = 0 and  [ 0, j ] = ∞ ;
             for(int i = 0 ; i < weightsNumber ; i++){
@@ -80,12 +80,7 @@ public class DynamicProgramming {
                 //table[0][j] = Integer.MAX_VALUE;// it "replaces" the infinity value
                 table[0][j] = 15;
             }
-            for(int i  = 0 ; i < weightsNumber ; i++){
-                for(int j = 0 ; j <= capacity ; j++){
-                    System.out.print(table[i][j] + " ");
-                }
-                System.out.println("");
-            }
+
             //initialize two values
             int x;
             int y;
@@ -107,18 +102,11 @@ public class DynamicProgramming {
                 }
 
             }
-            for(int i  = 0 ; i < weightsNumber ; i++){
-                for(int j = 0 ; j <= capacity ; j++){
-                    System.out.print(table[i][j] + " ");
-                }
-                System.out.println("");
-            }
+
 
             // Create combination for every pair, use table[][]
             if(table[weightsNumber-1][capacity] == 15){
-                System.out.println("ksexna to den spaei se kermata h malakia");
             }else{
-                System.out.println("Pame na broyme kai kermatakia na ginei xamos twra");
                 int i = weightsNumber-1;
                 int j = capacity ;
                 while(j > 0){
@@ -127,19 +115,15 @@ public class DynamicProgramming {
                 if(table[i-1][j] == table[i][j]  ) {
                     i = i - 1;
                 }else if (table[i][j] == table[i][j - weights.get(i)] + 1){ // table[i][j] == 1 + table [i,j - weights(i)
-                    System.out.println("mia fora");
                     j = j - weights.get(i);
                     //useOfWeights.get(i)++;
                     int value = useOfWeights.get(i); // get value
                     value = value + 1; // increment value
-                    System.out.println("Value");
                     useOfWeights.set(i, value);
                 }else{
-                    System.out.println("Ayto ama ginetai th katsame th barka");
                 }
                 }
                 for(int klein = 0 ; klein < weightsNumber ; klein++){
-                    System.out.println("xrisi gia " + useOfWeights.get(klein) + " gia baros " + weights.get(klein));
                 }
                 saveResult(rankOfWeights,useOfWeights,ant);
             }

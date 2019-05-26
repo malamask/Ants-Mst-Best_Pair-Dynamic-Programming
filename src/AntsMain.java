@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -12,7 +13,7 @@ public class AntsMain {
         HashMap<Integer,RedAnt> redAnts;
         HashMap<Integer,BlackAnt> blackAnts;
         //initialize the filemanager
-        String inputFile;
+        String inputFile = "ants.txt";
          try {
              inputFile = args[0];
         }
@@ -20,8 +21,14 @@ public class AntsMain {
             System.out.println("ArrayIndexOutOfBoundsException caught");
         }
         finally {
-            inputFile = "ants.txt";
+
         }
+        //find where is the .jar file
+        File f = new File(System.getProperty("java.class.path"));
+        File dir = f.getAbsoluteFile().getParentFile();
+        String path = dir.toString();
+        inputFile = path + "\\"  + inputFile;
+
         FileManager file = new FileManager(inputFile);
         file.createHashMaps();// two hashmaps for red and black ants
         //save

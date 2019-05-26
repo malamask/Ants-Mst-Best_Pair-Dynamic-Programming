@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -48,7 +49,6 @@ public class GaleShapley {
             this.antsRank = new ArrayList<>();
             ArrayList<Float> rankAssist = new ArrayList<>(); // it contains the corresponidg distances
             for(int j=2 ; j < size ; j+=2 ){
-                System.out.println("twra blepoyme kserw gw asxeta pragmata " + distances[i][j]);
                 antsRank.add(j);
                 rankAssist.add(distances[i][j]);
             }
@@ -58,9 +58,7 @@ public class GaleShapley {
             //System.out.println("gia na doyme " + sort[14]);
             rankAssist = new ArrayList<Float>(Arrays.asList(sort));
             redPreferences.put(i,antsRank);
-            System.out.println("to redpreferenves exei megethos " + redPreferences.size() );
             for(int k=0 ; k < redPreferences.get(i).size() ; k ++){
-               // System.out.println("Stoixeio me protereotita  " + (k+1) +" : " + + redPreferences.get(i).get(k));
             }
         }
         //create preferences for black ants
@@ -69,7 +67,6 @@ public class GaleShapley {
             this.antsRank = new ArrayList<>();
             ArrayList<Float> rankAssist = new ArrayList<>(); // it contains the corresponidg distances
             for(int j=1 ; j < size ; j+=2 ){
-                System.out.println("twra blepoyme kserw gw asxeta pragmata " +distances[i][j]);
                 antsRank.add(j);
                 rankAssist.add(distances[i][j]);
             }
@@ -79,7 +76,6 @@ public class GaleShapley {
             //System.out.println("gia na doyme " + sort[14]);
             rankAssist = new ArrayList<Float>(Arrays.asList(sort));
             blackPreferences.put(i,antsRank);
-            System.out.println("to redpreferenves exei megethos " + blackPreferences.size());
             for(int k=0 ; k < blackPreferences.get(i).size() ; k ++){
                // System.out.println("Stoixeio me protereotita  " + (k+1) +" : " + + blackPreferences.get(i).get(k));
             }
@@ -92,18 +88,13 @@ public class GaleShapley {
         for(int i  = 1 ; i < size ; i+=2){
             proposals.put(i,redPreferences.get(i).get(0));
             proposalUnion.add(redPreferences.get(i).get(0));
-            System.out.println("initiliazie");
 
             if(chousedFrom.containsKey(redPreferences.get(i).get(0))){// if this black ant has alread choosed from other red ants, change the proposal hashmao
-                System.out.println("exei epilegei hdh to " + redPreferences.get(i).get(0) + " apo to " + chousedFrom.get(redPreferences.get(i).get(0)));
                 //here we have to iterate the blackPreference ArrayList to find which red ants is more desirable
                 if(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) > blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0)))){// redPreferevnes.get(i) the same with the other red ant
-                    System.out.println(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) + " to murmigki " + i + " kai " + blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0))) + " to murmigi " + chousedFrom.get(redPreferences.get(i).get(0)) );
-                    System.out.println("Zhmia");
                     redPreferences.get(i).remove(0);//remove the current preference
                     proposals.put(i,redPreferences.get(i).get(0));// update the proposal table
                     proposalUnion.add(redPreferences.get(i).get(0));
-                    System.out.println("Twra mpike to " + redPreferences.get(i).get(0));
                     redPreferences.get(i).remove(0);//remove also this preferenve because it's already used
 
                 }else{ // current ant is more desirable from the previοus
@@ -122,26 +113,19 @@ public class GaleShapley {
 
         }
 
-        for(int i  = 1 ; i < size ; i+=2){
-            System.out.println(i + " " + proposals.get(i));
-        }
+
         //Continue
 
-        System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
         while(proposalUnion.size() < (size-1)/2){
             proposalUnion = new HashSet<>();// re - create the proposal union
-            System.out.println("to proposalUnion einai iso me " + proposalUnion.size());
             for(int i  = 1 ; i < size ; i+=2 ){
                 if(chousedFrom.containsKey(redPreferences.get(i).get(0))){// if this black ant has alread choosed from other red ants, change the proposal hashmao
-                    System.out.println("exei epilegei hdh to " + redPreferences.get(i).get(0) + " apo to " + chousedFrom.get(redPreferences.get(i).get(0)));
                     //here we have to iterate the blackPreference ArrayList to find which red ants is more desirable
                     if(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) > blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0)))){// redPreferevnes.get(i) the same with the other red ant
-                        System.out.println(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) + " to murmigki " + i + " kai " + blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0))) + " to murmigi " + chousedFrom.get(redPreferences.get(i).get(0)) );
                         //System.out.println("Zhmia");
                         redPreferences.get(i).remove(0);//remove the current preference
                         proposals.put(i,redPreferences.get(i).get(0));// update the proposal table
                         proposalUnion.add(redPreferences.get(i).get(0));
-                        System.out.println("Twra mpike to " + redPreferences.get(i).get(0));
                         redPreferences.get(i).remove(0);//remove also this preferenve because it's already used
 
                     }else{ // current ant is more desirable from the previοus
@@ -165,7 +149,12 @@ public class GaleShapley {
 
 
     private void saveResult() throws FileNotFoundException, UnsupportedEncodingException {
-        PrintWriter writer = new PrintWriter("GaleSapley.txt", "UTF-8");
+        File f = new File(System.getProperty("java.class.path"));
+        File dir = f.getAbsoluteFile().getParentFile();
+        String path = dir.toString();
+        String outputfile = path + "\\" + "galeShapley.txt";
+        PrintWriter writer = new PrintWriter(outputfile, "UTF-8");
+        //PrintWriter writer = new PrintWriter("GaleSapley.txt", "UTF-8");
         for(int i= 1 ; i < size; i+=2){
             writer.println(i + " " +proposals.get(i));
         }
@@ -178,15 +167,12 @@ public class GaleShapley {
             if(i % 2 != 0){// odd number
                 xi = redAnts.get(i).getX();
                 yi = redAnts.get(i).getY();
-                System.out.println("syntetagmenes " + xi + yi);
             }else{ // even number
-                System.out.println("brike ayto to apotelesma kai mpaine gia artio"+ i % 2);
                 xi = blackAnts.get(i).getX();
                 yi = blackAnts.get(i).getY();
             }
             for (int j = 1; j < size ; j++) {
                 if(j % 2 != 0){// odd number
-                    System.out.println("petaei null pointer gia j= " + j);
                     xj = redAnts.get(j).getX();
                     yj = redAnts.get(j).getY();
                 }else{ // even number
@@ -194,17 +180,10 @@ public class GaleShapley {
                     yj = blackAnts.get(j).getY();
                 }
                 distances[i][j] = euclideanDistance(xi,yi,xj,yj);
-                System.out.println("Mpike apostasi " + distances[i][j]);
             }
         }
 
-        for(int i = 1 ; i < size ; i++){
-            for(int j = 1 ; j < size ; j++){
-                System.out.println(distances[i][j]);
-            }
-        }
 
-        System.out.println("size =" + size);
     }
     private float euclideanDistance(float x1,float y1,float x2,float y2){
         float xD = Math.abs(x1-x2);
