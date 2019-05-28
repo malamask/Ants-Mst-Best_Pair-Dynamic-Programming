@@ -119,7 +119,7 @@ public class GaleShapley {
         while(proposalUnion.size() < (size-1)/2){
             proposalUnion = new HashSet<>();// re - create the proposal union
             for(int i  = 1 ; i < size ; i+=2 ){
-                if(chousedFrom.containsKey(redPreferences.get(i).get(0))){// if this black ant has alread choosed from other red ants, change the proposal hashmao
+                if(chousedFrom.containsKey(redPreferences.get(i).get(0))){// if this black ant has alread choosed from other red ants, change the proposal hashmap
                     //here we have to iterate the blackPreference ArrayList to find which red ants is more desirable
                     if(blackPreferences.get(redPreferences.get(i).get(0)).indexOf(i) > blackPreferences.get(redPreferences.get(i).get(0)).indexOf(chousedFrom.get(redPreferences.get(i).get(0)))){// redPreferevnes.get(i) the same with the other red ant
                         //System.out.println("Zhmia");
@@ -147,12 +147,12 @@ public class GaleShapley {
 
     }
 
-
+    //this fuction save the result at the .txt file
     private void saveResult() throws FileNotFoundException, UnsupportedEncodingException {
         File f = new File(System.getProperty("java.class.path"));
         File dir = f.getAbsoluteFile().getParentFile();
         String path = dir.toString();
-        String outputfile = path + "\\" + "galeShapley.txt";
+        String outputfile = path + "\\" + "GaleShapley.txt";
         PrintWriter writer = new PrintWriter(outputfile, "UTF-8");
         //PrintWriter writer = new PrintWriter("GaleSapley.txt", "UTF-8");
         for(int i= 1 ; i < size; i+=2){
@@ -160,6 +160,8 @@ public class GaleShapley {
         }
         writer.close();
     }
+
+    //this fuction find the distances between the ants
     private void findDistances(){
         float xi,yi;
         float xj,yj;

@@ -45,7 +45,7 @@ public class Kruskal {
         saveResult();
 
     }
-
+    //this fuction find the distances between the ants
     private void findDistances(){ // O(n^2) complexity
 
         float xi,yi;
@@ -74,6 +74,7 @@ public class Kruskal {
 
     }
 
+    //this fuctin calculate the distances between two ants
     private float euclideanDistance(float x1,float y1,float x2,float y2){
         float xD = Math.abs(x1-x2);
         xD = (float) Math.pow(xD,2);
@@ -154,7 +155,7 @@ public class Kruskal {
                     //System.out.println("σβήσιμο" + nodePosition.get(secondPair.get(i)));
                     unions.get(setForDelete).clear();
                 }
-            }else{ // it causes circle, skip number
+            }else{ // this edge causes circle, skip number
 
             }
             if(totalConnections == size-2){
@@ -164,6 +165,7 @@ public class Kruskal {
 
     }
 
+    //this fuction find if the current edge causes circle in the tree
     private boolean isCirclePath(int x,int y){ // checks if the link x - y causes a circle path, in order to approve it or not
             if(this.nodePosition.get(x)!=null && this.nodePosition.get(y)!= null){
                 if(this.nodePosition.get(x) == this.nodePosition.get(y) ){
@@ -177,12 +179,12 @@ public class Kruskal {
 
     }
 
-    //this fuction is called for save the result in a mstKruskal.txt file
+    //this fuction save the result at the .txt file
     private void saveResult() throws FileNotFoundException, UnsupportedEncodingException {
         File f = new File(System.getProperty("java.class.path"));
         File dir = f.getAbsoluteFile().getParentFile();
         String path = dir.toString();
-        String outputfile = path + "\\" + "mstKruskal.txt";
+        String outputfile = path + "\\" + "MstKruskal.txt";
         PrintWriter writer = new PrintWriter(outputfile, "UTF-8");
         //PrintWriter writer = new PrintWriter("mstKruskal.txt", "UTF-8");
         writer.println(treeWeight);
@@ -238,6 +240,8 @@ public class Kruskal {
         return i+1;
     }
     //end of sorting code
+
+    //testing function
     public void simpletEST(){
         this.size = 11;
         firstPair = null;

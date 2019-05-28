@@ -77,8 +77,8 @@ public class DynamicProgramming {
                 table[i][0] = 0;
             }
             for(int j = 1 ; j <= capacity ; j++){
-                //table[0][j] = Integer.MAX_VALUE;// it "replaces" the infinity value
-                table[0][j] = 15;
+               // table[0][j] = Integer.MAX_VALUE;// it "replaces" the infinity value
+                table[0][j] = 100000;
             }
 
             //initialize two values
@@ -105,11 +105,11 @@ public class DynamicProgramming {
 
 
             // Create combination for every pair, use table[][]
-            if(table[weightsNumber-1][capacity] == 15){
+            if(table[weightsNumber-1][capacity] == 100000){
             }else{
                 int i = weightsNumber-1;
                 int j = capacity ;
-                while(j > 0){
+                while(j > 0 && i>0){
 
 
                 if(table[i-1][j] == table[i][j]  ) {
@@ -131,6 +131,7 @@ public class DynamicProgramming {
         writer.close();
     }
 
+    //this fuction save the result at the .txt file
     private void saveResult(ArrayList<Integer> rankOfWeights, ArrayList<Integer> useOfWeights,int ant){
         HashMap<Integer,Integer> rowToPrint = new HashMap<>();
         for(int i= 1 ; i < 6 ; i++ ){
